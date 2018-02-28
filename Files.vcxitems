@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{db6b0d38-90a1-4b09-bfd6-d12e81ea3704}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="$(MSBuildThisFileDirectory)About\About-Debug.xml" />
+    <Xml Include="$(MSBuildThisFileDirectory)About\About-Release.xml" />
+    <Xml Include="$(MSBuildThisFileDirectory)Defs\GearUpAndGoDefs.xml" />
+    <Xml Include="$(MSBuildThisFileDirectory)Languages\Languages\DefInjected\ThingDef\GearUpAndGoInjected.xml" />
+    <Xml Include="$(MSBuildThisFileDirectory)Languages\Languages\Keyed\GearUpAndGoKeyed.xml" />
+    <Xml Include="$(MSBuildThisFileDirectory)Patches\GearUpAndGoPatches.xml" />
+  </ItemGroup>
+</Project>
