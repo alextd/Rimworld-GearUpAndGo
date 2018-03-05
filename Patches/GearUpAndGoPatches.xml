@@ -7,5 +7,11 @@
             <li><compClass>GearUpAndGo.CompWornFromInventory</compClass></li>
 		</value>
 	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef [@Name ="BasePawn"]/comps</xpath>
+		<value>
+			<li><compClass>GearUpAndGo.CompGearUpAndGizGo</compClass></li>
+		</value>
+	</Operation>
 
 </Patch>

@@ -55,11 +55,17 @@
     <None Include="..\Defs\**" />
     <None Include="..\Languages\**" />
     <None Include="..\Patches\**" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompWornFromInventory.cs" />
     <Compile Include="DebugLog.cs" />
+    <Compile Include="GearUpAndGizGo.cs" />
     <Compile Include="GearUpAndGo.cs" />
+    <Compile Include="JobDriver_GearUpAndGo.cs" />
     <Compile Include="JobDriver_SwapApparelWithInventory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwapOutfit.cs" />

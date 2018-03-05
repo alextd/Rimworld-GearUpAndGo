@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Verse;
+using Verse.AI;
+using RimWorld;
 using Harmony;
 
 namespace GearUpAndGo
@@ -30,5 +32,13 @@ namespace GearUpAndGo
 			//	return "Gear Up And Go";
 			//}
 		}
+	}
+
+	[DefOf]
+	public static class GearUpAndGoJobDefOf
+	{
+		public static JobDef SwapApparelWithInventory;
+		public static JobDef UpgradeApparelInInventory;
+		public static JobDef GearUpAndGo;
 	}
 }

@@ -16,5 +16,13 @@
     <casualInterruptible>false</casualInterruptible>
     <suspendable>false</suspendable>
   </JobDef>
+
+	
+	<JobDef>
+		<defName>GearUpAndGo</defName>
+		<driverClass>GearUpAndGo.JobDriver_GearUpAndGo</driverClass>
+		<reportString>gearing up and going to TargetA.</reportString>
+		<casualInterruptible>false</casualInterruptible>
+	</JobDef>
 	
 </Defs>
