@@ -41,8 +41,18 @@ namespace GearUpAndGo
 				if (!currentOutfit.filter.Allows(takeOff) && pawn.outfits.forcedHandler.AllowedToAutomaticallyDrop(takeOff))
 				{
 					Log.Message("Finding swaps for " + pawn + ", could take off " + takeOff);
-					
-					HashSet<Thing> haulingThings = pawn.TryGetComp<CompHauledToInventory>()?.GetHashSet();
+
+					HashSet<Thing> haulingThings = null;
+					Log.Message("Mods: " + ModsConfig.ActiveModsInLoadOrder.ToStringSafeEnumerable());
+
+					try
+					{
+						((Action)(() =>
+						{
+							haulingThings = pawn.TryGetComp<CompHauledToInventory>()?.GetHashSet();
+						}))();
+					}
+					catch (TypeLoadException) { }
 
 					foreach (Thing t in pawn.inventory.innerContainer)
 					{
