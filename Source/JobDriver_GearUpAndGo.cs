@@ -36,6 +36,7 @@ namespace GearUpAndGo
 					{
 						job.exitMapOnArrival = true; // I guess
 					}
+					pawn.drafter.Drafted = true;
 					pawn.jobs.StartJob(job, JobCondition.Succeeded);
 					MoteMaker.MakeStaticMote(intVec, pawn.Map, ThingDefOf.Mote_FeedbackGoto, 1f);
 				}

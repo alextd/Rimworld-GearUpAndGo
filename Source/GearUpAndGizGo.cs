@@ -47,7 +47,6 @@ namespace GearUpAndGo
 						foreach (Pawn p in Find.Selector.SelectedObjects
 							.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
 						{
-							p.drafter.Drafted = true;
 							p.jobs.StartJob(new Verse.AI.Job(GearUpAndGoJobDefOf.GearUpAndGo, target), Verse.AI.JobCondition.InterruptForced);
 						}
 					}
