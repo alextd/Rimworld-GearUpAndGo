@@ -1,6 +1,6 @@
 .vs
 *.cache
 Source/obj
-/Assemblies/GearUpAndGo.dll
+/Assemblies/*
 /About/About.xml
 *.csproj.user
