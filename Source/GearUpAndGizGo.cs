@@ -38,8 +38,8 @@ namespace GearUpAndGo
 			{
 				yield return new Command_GearUpAndGo()
 				{
-					defaultLabel = "Gear & Go",
-					defaultDesc = "Draft, get gear for current outfit, then go to the targeted location",
+					defaultLabel = "GearAndGo".Translate(),
+					defaultDesc = "GearAndGoDesc".Translate(),
 					icon = TexGearUpAndGo.guagIcon,
 					action = delegate (IntVec3 target)
 					{
