@@ -38,8 +38,8 @@ namespace GearUpAndGo
 			{
 				yield return new Command_GearUpAndGo()
 				{
-					defaultLabel = "GearAndGo".Translate(),
-					defaultDesc = "GearAndGoDesc".Translate(),
+					defaultLabel = "TD.GearAndGo".Translate(),
+					defaultDesc = "TD.GearAndGoDesc".Translate(),
 					icon = TexGearUpAndGo.guagIcon,
 					action = delegate (IntVec3 target)
 					{

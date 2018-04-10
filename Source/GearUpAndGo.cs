@@ -29,7 +29,7 @@ namespace GearUpAndGo
 
 			//public override string SettingsCategory()
 			//{
-			//	return "GearUpAndGoSettingsName".Translate();
+			//	return "TD.GearUpAndGoSettingsName".Translate();
 			//}
 		}
 	}
