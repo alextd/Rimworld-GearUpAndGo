@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<LanguageData>
-	
-	<SwapApparelWithInventory.reportString>swapping apparel.</SwapApparelWithInventory.reportString>
-	<UpgradeApparelInInventory.reportString>upgrading TargetB to TargetA.</UpgradeApparelInInventory.reportString>
-	<GearUpAndGo.reportString>gearing up and going to TargetA.</GearUpAndGo.reportString>
-	
-</LanguageData>
