@@ -3,6 +3,7 @@ using Verse;
 using Verse.AI;
 using RimWorld;
 using Harmony;
+using UnityEngine;
 
 namespace GearUpAndGo
 {
@@ -12,8 +13,8 @@ namespace GearUpAndGo
 		{
 			public Mod(ModContentPack content) : base(content)
 			{
-				//// initialize settings
-				//GetSettings<Settings>();
+				// initialize settings
+				GetSettings<Settings>();
 #if DEBUG
 				HarmonyInstance.DEBUG = true;
 #endif
@@ -21,16 +22,16 @@ namespace GearUpAndGo
 				harmony.PatchAll(Assembly.GetExecutingAssembly());
 			}
 
-			//public override void DoSettingsWindowContents(Rect inRect)
-			//{
-			//	base.DoSettingsWindowContents(inRect);
-			//	GetSettings<Settings>().DoWindowContents(inRect);
-			//}
+			public override void DoSettingsWindowContents(Rect inRect)
+			{
+				base.DoSettingsWindowContents(inRect);
+				GetSettings<Settings>().DoWindowContents(inRect);
+			}
 
-			//public override string SettingsCategory()
-			//{
-			//	return "TD.GearUpAndGoSettingsName".Translate();
-			//}
+			public override string SettingsCategory()
+			{
+				return "TD.GearUpAndGoSettingsName".Translate();
+			}
 		}
 	}
 

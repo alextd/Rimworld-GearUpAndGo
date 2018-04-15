@@ -41,6 +41,9 @@
       <HintPath>..\..\..\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="BetterPawnControl">
+      <HintPath>..\..\..\..\..\workshop\content\294100\775061248\Assemblies\BetterPawnControl.dll</HintPath>
+    </Reference>
     <Reference Include="PickUpAndHaul">
       <HintPath>..\..\..\..\..\workshop\content\294100\1279012058\Assemblies\PickUpAndHaul.dll</HintPath>
       <Private>False</Private>
