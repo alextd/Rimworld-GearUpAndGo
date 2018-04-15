@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 	
-	<TD.GearAndGo>Gear & Go</TD.GearAndGo>
+	<TD.GearAndGo>Gear &amp; Go</TD.GearAndGo>
 	<TD.GearAndGoDesc>Draft, get gear for current outfit, then go to the targeted location</TD.GearAndGoDesc>
 	<TD.GearUpAndGoSettingsName>Gear Up And Go</TD.GearUpAndGoSettingsName>
 	
