@@ -5,6 +5,8 @@
 	<targetVersion>0.18.0</targetVersion>
 	<description>A button to GEAR UP AND GO.
 Draft, get gear for the current ouffit, and go to a targeted location.
+
+Will set a policy for the mod Better Pawn Control when the button is clicked. Set the policy name in the Settings.
 	
 Colonists also use gear in their inventory when finding gear to match a new outfit.
   

@@ -35,29 +35,43 @@ namespace GearUpAndGo
 		public static readonly Texture2D guagIcon = ContentFinder<Texture2D>.Get("CommandGearUpAndGo");
 		public static readonly Texture2D guagIconActive = ContentFinder<Texture2D>.Get("CommandGearUpAndGoActive");
 	}
+
+	public class GearUpMapComponent : MapComponent
+	{
+		public bool active = false;
+		public string lastPolicy = "";
+
+		public GearUpMapComponent(Map map) : base(map) { }
+
+		public override void ExposeData()
+		{
+			Scribe_Values.Look(ref active, "active", false);
+			Scribe_Values.Look(ref lastPolicy, "lastPolicy", "");
+		}
+	}
+
 	public class CompGearUpAndGizGo : ThingComp
 	{
-		public static bool active = false;
-		public static string lastPolicy = "";
-
 		public override IEnumerable<Gizmo> CompGetGizmosExtra()
 		{
 			if (this.parent is Pawn gizmoPawn)
 			{
+				GearUpMapComponent component = gizmoPawn.Map?.GetComponent<GearUpMapComponent>();
 				yield return new Command_GearUpAndGo()
 				{
 					defaultLabel = "TD.GearAndGo".Translate(),
 					defaultDesc = "TD.GearAndGoDesc".Translate(),
-					icon = active ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
+					icon = component.active ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
 					action = delegate (IntVec3 target)
 					{
 						Log.Message("GearUpAndGo to " + target);
 
-						active = true;
+						GearUpMapComponent comp = gizmoPawn.Map?.GetComponent<GearUpMapComponent>();
+						comp.active = true;
 
-						if (lastPolicy == "")
+						if (comp.lastPolicy == "")
 						{
-							lastPolicy = SetBetterPawnControl.CurrentPolicy();
+							comp.lastPolicy = SetBetterPawnControl.CurrentPolicy();
 							SetBetterPawnControl.SetPawnControlPolicy(Settings.Get().betterPawnControlBattlePolicy);
 						}
 
@@ -69,13 +83,14 @@ namespace GearUpAndGo
 					},
 					actionEnd = delegate()
 					{
-						if (!active) return;
-						active = false;
+						GearUpMapComponent comp = gizmoPawn.Map?.GetComponent<GearUpMapComponent>();
+						if (!comp.active) return;
+						comp.active = false;
 
 						Log.Message("GearUpAndGo done");
 
-						SetBetterPawnControl.SetPawnControlPolicy(lastPolicy);
-						lastPolicy = "";
+						SetBetterPawnControl.SetPawnControlPolicy(comp.lastPolicy);
+						comp.lastPolicy = "";
 
 						foreach (Pawn p in Find.Selector.SelectedObjects
 							.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
