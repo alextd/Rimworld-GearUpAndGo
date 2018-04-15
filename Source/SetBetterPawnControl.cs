@@ -21,13 +21,18 @@ namespace GearUpAndGo
 		{
 			if (!Active()) return;
 
-			Type assignMananer = AccessTools.TypeByName("AssignManager");
+			SetPawnControlPolicyEx(policyName);
+		}
 
-			FieldInfo linksInfo = AccessTools.Field(assignMananer, "links");
+		public static void SetPawnControlPolicyEx(string policyName)
+		{ 
+			Type assignManager = AccessTools.TypeByName("AssignManager");
+
+			FieldInfo linksInfo = AccessTools.Field(assignManager, "links");
 			List<AssignLink> links = (List<AssignLink>)linksInfo.GetValue(default(object));
 			Log.Message("links are: " + links.ToStringSafeEnumerable());
 
-			FieldInfo policiesInfo = AccessTools.Field(assignMananer, "policies");
+			FieldInfo policiesInfo = AccessTools.Field(assignManager, "policies");
 			List<Policy> assignPolicies = (List<Policy>)policiesInfo.GetValue(default(object));
 			Log.Message("assignPolicies are: " + assignPolicies.ToStringSafeEnumerable());
 
@@ -50,8 +55,11 @@ namespace GearUpAndGo
 		{
 			if (!Active()) return "";
 
-			Type assignMananer = AccessTools.TypeByName("AssignManager");
+			return CurrentPolicyEx();
+		}
 
+		public static string CurrentPolicyEx()
+		{ 
 			Log.Message("Resetting policyies");
 
 			MethodInfo GetActivePolicyInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "GetActivePolicy", new Type[] { });
