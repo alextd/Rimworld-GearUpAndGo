@@ -11,11 +11,17 @@ namespace GearUpAndGo
 {
 	static class SetBetterPawnControl
 	{
+		public static bool Active()
+		{
+			return ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "Better Pawn Control");
+		}
+
 		//Okay, I want it really bad, so let's do this.
 		public static void SetPawnControlPolicy(string policyName)
 		{
+			if (!Active()) return;
+
 			Type assignMananer = AccessTools.TypeByName("AssignManager");
-			if (assignMananer == null) return;
 
 			FieldInfo linksInfo = AccessTools.Field(assignMananer, "links");
 			List<AssignLink> links = (List<AssignLink>)linksInfo.GetValue(default(object));
@@ -42,8 +48,11 @@ namespace GearUpAndGo
 
 		public static string CurrentPolicy()
 		{
+			if (!Active()) return "";
+
 			Type assignMananer = AccessTools.TypeByName("AssignManager");
-			if (assignMananer == null) return "";
+
+			Log.Message("Resetting policyies");
 
 			MethodInfo GetActivePolicyInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "GetActivePolicy", new Type[] { });
 			return (GetActivePolicyInfo.Invoke(null, new object[] { }) as Policy)?.label ?? "";
