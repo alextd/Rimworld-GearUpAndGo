@@ -4,5 +4,7 @@
 	<TD.GearAndGo>Gear &amp; Go</TD.GearAndGo>
 	<TD.GearAndGoDesc>Draft, get gear for current outfit, then go to the targeted location</TD.GearAndGoDesc>
 	<TD.GearUpAndGoSettingsName>Gear Up And Go</TD.GearUpAndGoSettingsName>
+	<TD.SettingBetterPawnControlPolicy>If you're using Better Pawn Control, set this policy when you click the button:</TD.SettingBetterPawnControlPolicy>
+	<TD.SettingBetterPawnControlRemembered>The last policy is remembered, so right-clicking the button will reset and undraft</TD.SettingBetterPawnControlRemembered>
 	
 </LanguageData>

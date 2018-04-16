@@ -20,9 +20,9 @@ namespace GearUpAndGo
 			var options = new Listing_Standard();
 			options.Begin(wrect);
 
-			options.Label("If you're using Better Pawn Control, set this policy when you click the button:");
+			options.Label("TD.SettingBetterPawnControlPolicy".Translate());
 			betterPawnControlBattlePolicy = options.TextEntry(betterPawnControlBattlePolicy, 1);
-			options.Label("The last policy is remembered, so right-clicking the button will reset and undraft");
+			options.Label("TD.SettingBetterPawnControlRemembered".Translate());
 			options.Gap();
 
 			options.End();
