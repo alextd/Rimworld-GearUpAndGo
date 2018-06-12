@@ -158,7 +158,7 @@ namespace GearUpAndGo
 			MethodInfo FindSwapJobsInfo = AccessTools.Method(typeof(SwapOutfit), "FindSwapJobs");
 			MethodInfo FindEquipJobsInfo = AccessTools.Method(typeof(SwapOutfit), "FindEquipJobs");
 			MethodInfo FindUpgradeInvJobInfo = AccessTools.Method(typeof(SwapOutfit), "FindUpgradeInvJob");
-			MethodInfo ListGetItemInfo = AccessTools.Method(typeof(List<Apparel>), "get_Item");
+			MethodInfo ListGetItemInfo = AccessTools.Property(typeof(List<Apparel>), "Item").GetGetMethod();
 			FieldInfo RemoveApparelInfo = AccessTools.Field(typeof(JobDefOf), nameof(JobDefOf.RemoveApparel));
 
 
