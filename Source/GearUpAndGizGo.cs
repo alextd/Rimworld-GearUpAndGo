@@ -18,14 +18,14 @@ namespace GearUpAndGo
 		public override void ProcessInput(Event ev)
 		{
 			base.ProcessInput(ev);
-			SoundDefOf.TickTiny.PlayOneShotOnCamera(null);
-			if (ev.button == 0)
+			SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+			if ((ev.modifiers & EventModifiers.Shift) == EventModifiers.Shift)
+				actionEnd();
+			else
 				Find.Targeter.BeginTargeting(new TargetingParameters() { canTargetLocations = true }, delegate (LocalTargetInfo target)
 					{
 						this.action(target.Cell);
 					});
-			else
-				actionEnd();
 		}
 	}
 

@@ -36,7 +36,7 @@ namespace GearUpAndGo
 			List<Policy> assignPolicies = (List<Policy>)policiesInfo.GetValue(default(object));
 			Log.Message("assignPolicies are: " + assignPolicies.ToStringSafeEnumerable());
 
-			List<Pawn> pawns = Find.VisibleMap.mapPawns.FreeColonists.ToList();
+			List<Pawn> pawns = Find.CurrentMap.mapPawns.FreeColonists.ToList();
 			Log.Message("pawns are: " + pawns.ToStringSafeEnumerable());
 
 			Policy policy = assignPolicies.FirstOrDefault(p => p.label == policyName);
