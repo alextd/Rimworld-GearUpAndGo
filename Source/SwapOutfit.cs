@@ -1,4 +1,6 @@
-﻿using System;
+﻿/* 1.0 breaks this
+ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -129,7 +131,7 @@ namespace GearUpAndGo
 
 				foreach (Apparel possibleUpgrade in groundItems.Where(i => i is Apparel a
 				&& toReplace.def == a.def
-				&& a.Map.slotGroupManager.SlotGroupAt(a.Position) != null
+				&& a.Map.haulDestinationManager.SlotGroupAt(a.Position) != null
 				&& !a.IsForbidden(pawn)))
 				{
 					float thisScore = JobGiver_OptimizeApparel.ApparelScoreRaw(pawn, possibleUpgrade);
@@ -158,7 +160,6 @@ namespace GearUpAndGo
 			MethodInfo FindSwapJobsInfo = AccessTools.Method(typeof(SwapOutfit), "FindSwapJobs");
 			MethodInfo FindEquipJobsInfo = AccessTools.Method(typeof(SwapOutfit), "FindEquipJobs");
 			MethodInfo FindUpgradeInvJobInfo = AccessTools.Method(typeof(SwapOutfit), "FindUpgradeInvJob");
-			MethodInfo ListGetItemInfo = AccessTools.Property(typeof(List<Apparel>), "Item").GetGetMethod();
 			FieldInfo RemoveApparelInfo = AccessTools.Field(typeof(JobDefOf), nameof(JobDefOf.RemoveApparel));
 
 
@@ -231,3 +232,5 @@ namespace GearUpAndGo
 		}
 	}
 }
+
+*/

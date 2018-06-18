@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-
+<!--
+1.0 BORKS THIS
   <JobDef>
     <defName>SwapApparelWithInventory</defName>
     <driverClass>GearUpAndGo.JobDriver_SwapApparelWithInventory</driverClass>
@@ -16,6 +17,7 @@
     <casualInterruptible>false</casualInterruptible>
     <suspendable>false</suspendable>
   </JobDef>
+	-->
 
 	
 	<JobDef>

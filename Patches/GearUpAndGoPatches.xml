@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
-
+<!-- borked at 1.0
 	<Operation Class="PatchOperationAdd">
 		<xpath>Defs/ThingDef [@Name ="BasePawn"]/comps</xpath>
 		<value>
             <li><compClass>GearUpAndGo.CompWornFromInventory</compClass></li>
 		</value>
 	</Operation>
+	-->
 	<Operation Class="PatchOperationAdd">
 		<xpath>Defs/ThingDef [@Name ="BasePawn"]/comps</xpath>
 		<value>
