@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	
+	<TD.GearAndGo>Снарядись и вперед</TD.GearAndGo>
+	<TD.GearAndGoDesc>Перейти в режим призыва, взять соответствующее снаряжение и занять указанную позицию</TD.GearAndGoDesc>
+	<TD.GearUpAndGoSettingsName>Снарядись и вперед</TD.GearUpAndGoSettingsName>
+	<TD.SettingBetterPawnControlPolicy>Если вы используете мод 'Better Pawn Control', при нажатии кнопки станет активной политика:</TD.SettingBetterPawnControlPolicy>
+	<TD.SettingBetterPawnControlRemembered>Последняя активная политика запоминается, при правом клике на кнопку она восстановится, а колонист выйдет из режима призыва</TD.SettingBetterPawnControlRemembered>
+	
+</LanguageData>
