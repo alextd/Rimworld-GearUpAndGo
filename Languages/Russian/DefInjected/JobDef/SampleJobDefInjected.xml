@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	
+	<SwapApparelWithInventory.reportString>меняет одежду.</SwapApparelWithInventory.reportString>
+	<UpgradeApparelInInventory.reportString>улучшает TargetB на TargetA.</UpgradeApparelInInventory.reportString>
+	<GearUpAndGo.reportString>снаряжается и идет к TargetA.</GearUpAndGo.reportString>
+	
+</LanguageData>
