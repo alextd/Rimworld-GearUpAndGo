@@ -10,7 +10,7 @@ namespace GearUpAndGo
 {
 	public class JobDriver_GearUpAndGo : JobDriver
 	{
-		public override bool TryMakePreToilReservations()
+		public override bool TryMakePreToilReservations(bool errorOnFailed)
 		{
 			return true;
 		}
