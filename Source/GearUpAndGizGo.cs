@@ -7,6 +7,7 @@ using Harmony;
 using UnityEngine;
 using RimWorld;
 using Verse.Sound;
+using Verse.AI;
 
 namespace GearUpAndGo
 {
@@ -61,7 +62,7 @@ namespace GearUpAndGo
 				{
 					defaultLabel = "TD.GearAndGo".Translate(),
 					defaultDesc = "TD.GearAndGoDesc".Translate(),
-					icon = component.active ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
+					icon = component.active && component.lastPolicy != ""? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
 					action = delegate (IntVec3 target)
 					{
 						Log.Message("GearUpAndGo to " + target);
@@ -78,7 +79,7 @@ namespace GearUpAndGo
 						foreach (Pawn p in Find.Selector.SelectedObjects
 							.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
 						{
-							p.jobs.StartJob(new Verse.AI.Job(GearUpAndGoJobDefOf.GearUpAndGo, target), Verse.AI.JobCondition.InterruptForced);
+							p.jobs.TryTakeOrderedJob(new Job(GearUpAndGoJobDefOf.GearUpAndGo, target), JobTag.DraftedOrder);
 						}
 					},
 					actionEnd = delegate()
@@ -96,7 +97,7 @@ namespace GearUpAndGo
 							.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
 						{
 							p.jobs.ClearQueuedJobs();
-							p.jobs.EndCurrentJob(Verse.AI.JobCondition.InterruptForced);
+							p.jobs.EndCurrentJob(JobCondition.InterruptForced);
 							p.drafter.Drafted = false;
 						}
 					}
