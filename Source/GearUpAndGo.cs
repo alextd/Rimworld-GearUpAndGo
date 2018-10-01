@@ -7,31 +7,28 @@ using UnityEngine;
 
 namespace GearUpAndGo
 {
-	public class GearUpAndGo
+	public class Mod : Verse.Mod
 	{
-		public class Mod : Verse.Mod
+		public Mod(ModContentPack content) : base(content)
 		{
-			public Mod(ModContentPack content) : base(content)
-			{
-				// initialize settings
-				GetSettings<Settings>();
+			// initialize settings
+			GetSettings<Settings>();
 #if DEBUG
-				HarmonyInstance.DEBUG = true;
+			HarmonyInstance.DEBUG = true;
 #endif
-				HarmonyInstance harmony = HarmonyInstance.Create("uuugggg.rimworld.GearUpAndGo.main");
-				harmony.PatchAll(Assembly.GetExecutingAssembly());
-			}
+			HarmonyInstance harmony = HarmonyInstance.Create("uuugggg.rimworld.GearUpAndGo.main");
+			harmony.PatchAll();
+		}
 
-			public override void DoSettingsWindowContents(Rect inRect)
-			{
-				base.DoSettingsWindowContents(inRect);
-				GetSettings<Settings>().DoWindowContents(inRect);
-			}
+		public override void DoSettingsWindowContents(Rect inRect)
+		{
+			base.DoSettingsWindowContents(inRect);
+			GetSettings<Settings>().DoWindowContents(inRect);
+		}
 
-			public override string SettingsCategory()
-			{
-				return "TD.GearUpAndGoSettingsName".Translate();
-			}
+		public override string SettingsCategory()
+		{
+			return "TD.GearUpAndGoSettingsName".Translate();
 		}
 	}
 
