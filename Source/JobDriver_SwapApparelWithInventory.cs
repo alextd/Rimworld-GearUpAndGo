@@ -83,9 +83,9 @@ namespace GearUpAndGo
 					Apparel apparel = (Apparel)this.job.targetA.Thing;
 					Apparel dropThis = (Apparel)this.job.targetB.Thing;
 
-					Log.Message(this.pawn + " dropping " + dropThis);
+					Log.Message("{this.pawn} dropping {dropThis}");
 					this.pawn.inventory.innerContainer.TryDrop(dropThis, ThingPlaceMode.Near, 1, out Thing dummy);
-					Log.Message(this.pawn + " equippin " + apparel);
+					Log.Message("{this.pawn} equippin {apparel}");
 					apparel.DeSpawn();
 					this.pawn.inventory.innerContainer.TryAdd(apparel);
 				},

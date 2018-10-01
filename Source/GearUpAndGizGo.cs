@@ -65,7 +65,7 @@ namespace GearUpAndGo
 					icon = component.active && component.lastPolicy != ""? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
 					action = delegate (IntVec3 target)
 					{
-						Log.Message("GearUpAndGo to " + target);
+						Log.Message($"GearUpAndGo to {target}");
 
 						GearUpMapComponent comp = gizmoPawn.Map?.GetComponent<GearUpMapComponent>();
 						comp.active = true;
@@ -88,7 +88,7 @@ namespace GearUpAndGo
 						if (!comp.active) return;
 						comp.active = false;
 
-						Log.Message("GearUpAndGo done");
+						Log.Message($"GearUpAndGo done");
 
 						SetBetterPawnControl.SetPawnControlPolicy(comp.lastPolicy);
 						comp.lastPolicy = "";

@@ -30,20 +30,20 @@ namespace GearUpAndGo
 
 			FieldInfo linksInfo = AccessTools.Field(assignManager, "links");
 			List<AssignLink> links = (List<AssignLink>)linksInfo.GetValue(default(object));
-			Log.Message("links are: " + links.ToStringSafeEnumerable());
+			Log.Message($"links are: {links.ToStringSafeEnumerable()}");
 
 			FieldInfo policiesInfo = AccessTools.Field(assignManager, "policies");
 			List<Policy> assignPolicies = (List<Policy>)policiesInfo.GetValue(default(object));
-			Log.Message("assignPolicies are: " + assignPolicies.ToStringSafeEnumerable());
+			Log.Message($"assignPolicies are: {assignPolicies.ToStringSafeEnumerable()}");
 
 			List<Pawn> pawns = Find.CurrentMap.mapPawns.FreeColonists.ToList();
-			Log.Message("pawns are: " + pawns.ToStringSafeEnumerable());
+			Log.Message($"pawns are: {pawns.ToStringSafeEnumerable()}");
 
 			Policy policy = assignPolicies.FirstOrDefault(p => p.label == policyName);
 			
 			if (policy != null)
 			{
-				Log.Message("using policy: " + policy);
+				Log.Message($"using policy: {policy}");
 				//MainTabWindow_Assign_Policies
 				//private static void LoadState(List<AssignLink> links, List< Pawn > pawns, Policy policy)
 				MethodInfo LoadStateInfo = AccessTools.Method(AccessTools.TypeByName("MainTabWindow_Assign_Policies"), "LoadState");
@@ -60,7 +60,7 @@ namespace GearUpAndGo
 
 		public static string CurrentPolicyEx()
 		{ 
-			Log.Message("Resetting policyies");
+			Log.Message($"Resetting policyies");
 
 			MethodInfo GetActivePolicyInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "GetActivePolicy", new Type[] { });
 			return (GetActivePolicyInfo.Invoke(null, new object[] { }) as Policy)?.label ?? "";

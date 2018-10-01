@@ -21,11 +21,11 @@ namespace GearUpAndGo
 			foreach (Apparel pairAp in pawn.apparel.WornApparel)
 			{
 				if (pairAp == skipAp) continue;
-				Log.Message("Does " + newAp + " fit with " + pairAp + "?");
+				Log.Message($"Does {newAp} fit with {pairAp}?");
 
 				if (!ApparelUtility.CanWearTogether(newAp.def, pairAp.def, pawn.RaceProps.body))
 				{
-					Log.Message("NO");
+					Log.Message($"NO");
 					return false;
 				}
 			}
@@ -42,10 +42,10 @@ namespace GearUpAndGo
 				Apparel takeOff = wornApparel[i];
 				if (!currentOutfit.filter.Allows(takeOff) && pawn.outfits.forcedHandler.AllowedToAutomaticallyDrop(takeOff))
 				{
-					Log.Message("Finding swaps for " + pawn + ", could take off " + takeOff);
+					Log.Message($"Finding swaps for {pawn}, could take off {takeOff}");
 
 					HashSet<Thing> haulingThings = null;
-					Log.Message("Mods: " + ModsConfig.ActiveModsInLoadOrder.ToStringSafeEnumerable());
+					Log.Message($"Mods: {ModsConfig.ActiveModsInLoadOrder.ToStringSafeEnumerable()}");
 
 					try
 					{
@@ -58,29 +58,29 @@ namespace GearUpAndGo
 
 					foreach (Thing t in pawn.inventory.innerContainer)
 					{
-						Log.Message("could wear " + t + "?");
+						Log.Message($"could wear {t}?");
 						if ((haulingThings == null || !haulingThings.Contains(t)) &&
 							t is Apparel swapTo &&
 							currentOutfit.filter.Allows(swapTo) &&
 							ApparelUtility.HasPartsToWear(pawn, swapTo.def))
 						{
-							Log.Message("does " + t + " match?");
+							Log.Message($"does {t} match?");
 							if (ApparelUtility.CanWearTogether(takeOff.def, swapTo.def, pawn.RaceProps.body))
 								continue;
-							Log.Message("does " + t + " fit?");
+							Log.Message($"does {t} fit?");
 							if (FitsAfterSwap(swapTo, pawn, takeOff))
 							{
-								Log.Message("yes totally I'm swapping " + takeOff + " for " + swapTo);
+								Log.Message($"yes totally I'm swapping {takeOff} for {swapTo}");
 								return new Job(GearUpAndGoJobDefOf.SwapApparelWithInventory, takeOff, swapTo);
 							}
 						}
 					}
-					Log.Message("Nothing to swap to: should I return it to inventory?");
+					Log.Message($"Nothing to swap to: should I return it to inventory?");
 
 					HashSet<Thing> wornThings = pawn.TryGetComp<CompWornFromInventory>()?.GetHashSet();
 					if (wornThings?.Contains(takeOff) ?? false)
 					{
-						Log.Message("yes totally I'm removing " + takeOff + " back into inventory");
+						Log.Message($"yes totally I'm removing {takeOff} back into inventory");
 						return new Job(GearUpAndGoJobDefOf.SwapApparelWithInventory, takeOff);
 					}
 
@@ -91,7 +91,7 @@ namespace GearUpAndGo
 
 		public static Job FindEquipJobs(Pawn pawn)
 		{
-			Log.Message("Finding equip from inv for " + pawn);
+			Log.Message($"Finding equip from inv for {pawn}");
 
 			Outfit currentOutfit = pawn.outfits.CurrentOutfit;
 
@@ -100,18 +100,18 @@ namespace GearUpAndGo
 				ApparelUtility.HasPartsToWear(pawn, a.def) &&
 				currentOutfit.filter.Allows(a)))
 			{
-				Log.Message("Does this work? " + apparel);
+				Log.Message($"Does this work? {apparel}");
 				bool conflict = false;
 				foreach (Apparel wornApparel in pawn.apparel.WornApparel)
 					if (!ApparelUtility.CanWearTogether(wornApparel.def, apparel.def, pawn.RaceProps.body))
 					{
-						Log.Message("NO. conflicts with " + wornApparel);
+						Log.Message($"NO. conflicts with {wornApparel}");
 						conflict = true;
 						continue;
 					}
 				if (!conflict)
 				{
-					Log.Message("totally! Wearing " + apparel + "from inventory");
+					Log.Message($"totally! Wearing {apparel}from inventory");
 					return new Job(GearUpAndGoJobDefOf.SwapApparelWithInventory, null, apparel);
 				}
 			}
@@ -120,14 +120,14 @@ namespace GearUpAndGo
 
 		public static Job FindUpgradeInvJob(Pawn pawn, List<Thing> groundItems)
 		{
-			Log.Message("Finding if " + pawn + " can upgrade his inventory");
+			Log.Message($"Finding if {pawn} can upgrade his inventory");
 
 			foreach (Apparel toReplace in pawn.inventory.innerContainer
 				.Where(t => t is Apparel a))
 			{
 				Thing upgradeItem = null;
 				float bestScore = JobGiver_OptimizeApparel.ApparelScoreRaw(pawn, toReplace);
-				Log.Message("Looking for an upgrade to " + toReplace + "(" + bestScore + ")");
+				Log.Message($"Looking for an upgrade to {toReplace}({bestScore})");
 
 				foreach (Apparel possibleUpgrade in groundItems.Where(i => i is Apparel a
 				&& toReplace.def == a.def
@@ -135,11 +135,11 @@ namespace GearUpAndGo
 				&& !a.IsForbidden(pawn)))
 				{
 					float thisScore = JobGiver_OptimizeApparel.ApparelScoreRaw(pawn, possibleUpgrade);
-					Log.Message("possible upgrade is " + possibleUpgrade + "(" + thisScore + ")");
+					Log.Message($"possible upgrade is {possibleUpgrade}({thisScore})");
 					if (thisScore > bestScore
 						&& pawn.CanReserveAndReach(possibleUpgrade, PathEndMode.OnCell, pawn.NormalMaxDanger(), 1, -1, null, false))
 					{
-						Log.Message("It's better!");
+						Log.Message($"It's better!");
 						upgradeItem = possibleUpgrade;
 						bestScore = thisScore;
 					}
