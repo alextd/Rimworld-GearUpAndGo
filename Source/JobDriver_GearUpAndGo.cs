@@ -29,7 +29,7 @@ namespace GearUpAndGo
 				ThinkResult result = optimizer.TryIssueJobPackage(pawn, new JobIssueParams()); //TryGiveJob is protected :(
 				if (result == ThinkResult.NoJob)
 				{
-					Log.Message("{pawn} JobDriver_GearUpAndGo result NoJob");
+					Log.Message($"{pawn} JobDriver_GearUpAndGo result NoJob");
 					IntVec3 intVec = RCellFinder.BestOrderedGotoDestNear(TargetA.Cell, pawn);
 					Job job = new Job(JobDefOf.Goto, intVec);
 					if (pawn.Map.exitMapGrid.IsExitCell(UI.MouseCell()))
@@ -43,7 +43,7 @@ namespace GearUpAndGo
 				else
 				{
 					Job optJob = result.Job;
-					Log.Message("{pawn} JobDriver_GearUpAndGo job {optJob}");
+					Log.Message($"{pawn} JobDriver_GearUpAndGo job {optJob}");
 					if (optJob.def == JobDefOf.Wear)
 						pawn.Reserve(optJob.targetA, optJob);
 					pawn.jobs.jobQueue.EnqueueFirst(new Job(GearUpAndGoJobDefOf.GearUpAndGo, TargetA));
