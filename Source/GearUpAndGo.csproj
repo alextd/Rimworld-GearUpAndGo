@@ -42,7 +42,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="BetterPawnControl">
-      <HintPath>..\..\..\..\..\workshop\content\294100\775061248\Assemblies\BetterPawnControl.dll</HintPath>
+      <HintPath>..\..\..\..\..\workshop\content\294100\1541460369\Assemblies\BetterPawnControl.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PickUpAndHaul">
