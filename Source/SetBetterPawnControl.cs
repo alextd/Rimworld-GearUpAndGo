@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using Verse;
+using RimWorld;
 using BetterPawnControl;
 using Harmony;
 
@@ -16,12 +17,26 @@ namespace GearUpAndGo
 			return ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "Better Pawn Control");
 		}
 
+		static bool warned = false;
 		//Okay, I want it really bad, so let's do this.
 		public static void SetPawnControlPolicy(string policyName)
 		{
 			if (!Active()) return;
 
-			SetPawnControlPolicyEx(policyName);
+			try
+			{
+				SetPawnControlPolicyEx(policyName);
+			}
+			catch(Exception e)
+			{
+				if (!warned)
+				{
+					string desc = "Gear Up And Go Failed to set Better Pawn Control Policy, I have no idea why, probably needs a re-compile, so check for an update or tell me (sorry this is really confusing.)";
+					Find.LetterStack.ReceiveLetter("Gear+Go failed to set Pawn Control", desc, LetterDefOf.NegativeEvent, e.ToStringSafe());
+					Verse.Log.Error($"{desc}\n\n{e.ToStringSafe()}");
+					warned = true;
+				}
+			}
 		}
 
 		public static void SetPawnControlPolicyEx(string policyName)
@@ -55,7 +70,14 @@ namespace GearUpAndGo
 		{
 			if (!Active()) return "";
 
-			return CurrentPolicyEx();
+			try
+			{
+				return CurrentPolicyEx();
+			}
+			catch (Exception)
+			{
+				return "";
+			}
 		}
 
 		public static string CurrentPolicyEx()
