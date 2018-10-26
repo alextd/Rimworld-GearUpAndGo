@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	
+	<TD.GearAndGo>Gear &amp; Go</TD.GearAndGo>
+	<TD.GearAndGoDesc>Reclutar, equiparse e ir a la ubicación indicada.\n\nSi está usando "Better Pawn Control", esto también establecerá una política (definida en la configuración). Shift+clic para desreclutar y restablecer la política anterior.</TD.GearAndGoDesc>
+	<TD.GearUpAndGoSettingsName>Gear Up And Go</TD.GearUpAndGoSettingsName>
+	<TD.SettingBetterPawnControlPolicy>Si se está usando "Better Pawn Control", establecer esta política al hacer clic en el botón:</TD.SettingBetterPawnControlPolicy>
+	<TD.SettingBetterPawnControlRemembered>Se recordará la última política, de modo que al hacer Shift+clic en el botón se restablecerá a ella y se desreclutará.</TD.SettingBetterPawnControlRemembered>
+	
+</LanguageData>

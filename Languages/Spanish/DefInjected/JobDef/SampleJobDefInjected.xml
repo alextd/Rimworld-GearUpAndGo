@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	
+	<SwapApparelWithInventory.reportString>Cambiandose de vestimenta.</SwapApparelWithInventory.reportString>
+	<UpgradeApparelInInventory.reportString>actualizando TargetB a TargetA.</UpgradeApparelInInventory.reportString>
+	<GearUpAndGo.reportString>equipandose e yendo a TargetA.</GearUpAndGo.reportString>
+	
+</LanguageData>
