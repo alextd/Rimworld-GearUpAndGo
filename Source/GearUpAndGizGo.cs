@@ -39,14 +39,12 @@ namespace GearUpAndGo
 
 	public class GearUpMapComponent : MapComponent
 	{
-		public bool active = false;
 		public string lastPolicy = "";
 
 		public GearUpMapComponent(Map map) : base(map) { }
 
 		public override void ExposeData()
 		{
-			Scribe_Values.Look(ref active, "active", false);
 			Scribe_Values.Look(ref lastPolicy, "lastPolicy", "");
 		}
 	}
@@ -62,13 +60,12 @@ namespace GearUpAndGo
 				{
 					defaultLabel = "TD.GearAndGo".Translate(),
 					defaultDesc = "TD.GearAndGoDesc".Translate(),
-					icon = component.active && component.lastPolicy != ""? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
+					icon = component.lastPolicy != "" ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
 					action = delegate (IntVec3 target)
 					{
 						Log.Message($"GearUpAndGo to {target}");
 
 						GearUpMapComponent comp = gizmoPawn.Map?.GetComponent<GearUpMapComponent>();
-						comp.active = true;
 
 						if (comp.lastPolicy == "")
 						{
@@ -85,8 +82,7 @@ namespace GearUpAndGo
 					actionEnd = delegate()
 					{
 						GearUpMapComponent comp = gizmoPawn.Map?.GetComponent<GearUpMapComponent>();
-						if (!comp.active) return;
-						comp.active = false;
+						if (comp.lastPolicy == "") return;
 
 						Log.Message($"GearUpAndGo done");
 
