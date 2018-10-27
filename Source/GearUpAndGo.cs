@@ -46,10 +46,6 @@ namespace GearUpAndGo
 	[DefOf]
 	public static class GearUpAndGoJobDefOf
 	{
-		/* UNTIL 1.0 UPDATES
-			public static JobDef SwapApparelWithInventory;
-			public static JobDef UpgradeApparelInInventory;
-		*/
 		public static JobDef GearUpAndGo;
 	}
 }
