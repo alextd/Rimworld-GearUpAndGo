@@ -47,7 +47,7 @@ namespace GearUpAndGo
 	{
 		public string lastPolicy = "";
 
-		public GearUpPolicyComp() : base() { }
+		public GearUpPolicyComp(Game game) { }
 
 		public override void ExposeData()
 		{
