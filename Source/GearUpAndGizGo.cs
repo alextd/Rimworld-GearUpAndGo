@@ -88,14 +88,6 @@ namespace GearUpAndGo
 
 						SetBetterPawnControl.SetPawnControlPolicy(comp.lastPolicy);
 						comp.lastPolicy = "";
-
-						foreach (Pawn p in Find.Selector.SelectedObjects
-							.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
-						{
-							p.jobs.ClearQueuedJobs();
-							p.jobs.EndCurrentJob(JobCondition.InterruptForced);
-							p.drafter.Drafted = false;
-						}
 					}
 				};
 			}
