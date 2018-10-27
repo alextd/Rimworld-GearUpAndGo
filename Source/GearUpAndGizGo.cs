@@ -37,6 +37,12 @@ namespace GearUpAndGo
 		public static readonly Texture2D guagIconActive = ContentFinder<Texture2D>.Get("CommandGearUpAndGoActive");
 	}
 
+	//Backwardcompat
+	public class GearUpMapComponent : MapComponent
+	{
+		public GearUpMapComponent(Map map) : base(map) { }
+	}
+
 	public class GearUpPolicyComp : GameComponent
 	{
 		public string lastPolicy = "";
