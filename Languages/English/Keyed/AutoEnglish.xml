@@ -6,5 +6,6 @@
 	<TD.GearUpAndGoSettingsName>Gear Up And Go</TD.GearUpAndGoSettingsName>
 	<TD.SettingBetterPawnControlPolicy>If you're using Better Pawn Control, set this policy when you click the button:</TD.SettingBetterPawnControlPolicy>
 	<TD.SettingBetterPawnControlRemembered>The last policy is remembered, so shift-clicking the button will reset and undraft</TD.SettingBetterPawnControlRemembered>
+	<TD.GearUpPolicySetAlert>Gear Up And Go has set Better Pawn Control Policy for a battle.\n\nClick to reset to previous policy</TD.GearUpPolicySetAlert>
 	
 </LanguageData>

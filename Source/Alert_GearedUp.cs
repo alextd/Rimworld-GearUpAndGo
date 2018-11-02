@@ -12,7 +12,7 @@ namespace GearUpAndGo
 	{
 		public Alert_GearedUp()
 		{
-			this.defaultExplanation = "Gear Up And Go has set Better Pawn Control Policy for a battle.\n\nClick to reset to previous policy" ;
+			this.defaultExplanation = "TD.GearUpPolicySetAlert".Translate() ;
 		}
 
 		public override AlertReport GetReport()
