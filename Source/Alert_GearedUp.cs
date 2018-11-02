@@ -17,11 +17,7 @@ namespace GearUpAndGo
 
 		public override AlertReport GetReport()
 		{
-			GearUpPolicyComp comp = Current.Game.GetComponent<GearUpPolicyComp>();
-
-			if (comp.lastPolicy == "") return false;
-
-			return true;
+			return Current.Game.GetComponent<GearUpPolicyComp>().IsOn();
 		}
 
 		private const float Padding = 6f;

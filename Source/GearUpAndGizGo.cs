@@ -13,19 +13,24 @@ namespace GearUpAndGo
 {
 	public class Command_GearUpAndGo : Command
 	{
-		public Action<IntVec3> action;
+		public Action<IntVec3, Event> action;
 		public Action actionEnd;
+		
+		public Command_GearUpAndGo() : base()
+		{
+			alsoClickIfOtherInGroupClicked = false;
+		}
 
 		public override void ProcessInput(Event ev)
 		{
 			base.ProcessInput(ev);
 			SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
-			if ((ev.modifiers & EventModifiers.Shift) == EventModifiers.Shift)
+			if (ev.shift && Current.Game.GetComponent<GearUpPolicyComp>().IsOn())
 				actionEnd();
 			else
 				Find.Targeter.BeginTargeting(new TargetingParameters() { canTargetLocations = true }, delegate (LocalTargetInfo target)
 					{
-						this.action(target.Cell);
+						this.action(target.Cell, ev);
 					});
 		}
 	}
@@ -69,6 +74,11 @@ namespace GearUpAndGo
 
 			lastPolicy = "";
 		}
+
+		public bool IsOn()
+		{
+			return lastPolicy != "";
+		}
 	}
 
 	public class CompGearUpAndGizGo : ThingComp
@@ -83,11 +93,12 @@ namespace GearUpAndGo
 					defaultLabel = "TD.GearAndGo".Translate(),
 					defaultDesc = "TD.GearAndGoDesc".Translate(),
 					icon = component.lastPolicy != "" ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
-					action = delegate (IntVec3 target)
+					action = delegate (IntVec3 target, Event ev)
 					{
 						Log.Message($"GearUpAndGo to {target}");
 
-						Current.Game.GetComponent<GearUpPolicyComp>().Set();
+						if(!ev.alt)
+							Current.Game.GetComponent<GearUpPolicyComp>().Set();
 
 						foreach (Pawn p in Find.Selector.SelectedObjects
 							.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())

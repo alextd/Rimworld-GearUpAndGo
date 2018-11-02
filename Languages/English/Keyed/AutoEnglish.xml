@@ -2,7 +2,7 @@
 <LanguageData>
 	
 	<TD.GearAndGo>Gear &amp; Go</TD.GearAndGo>
-	<TD.GearAndGoDesc>Draft, get gear, then go to the targeted location.\n\nIf you are using Better Pawn Control, this will also set the policy (named in settings). Shift-click to undraft and reset Better Pawn Control policy</TD.GearAndGoDesc>
+	<TD.GearAndGoDesc>Get gear, draft, then go to the targeted location.\n\nIf you are using Better Pawn Control, this will also set the policy (named in settings). \nShift-click to reset Better Pawn Control policy.\n\nAlt-click when targeting it won't set Better Pawn Control Policy. Shift-click when targeting and it queues up the command.</TD.GearAndGoDesc>
 	<TD.GearUpAndGoSettingsName>Gear Up And Go</TD.GearUpAndGoSettingsName>
 	<TD.SettingBetterPawnControlPolicy>If you're using Better Pawn Control, set this policy when you click the button:</TD.SettingBetterPawnControlPolicy>
 	<TD.SettingBetterPawnControlRemembered>The last policy is remembered, so shift-clicking the button will reset and undraft</TD.SettingBetterPawnControlRemembered>
