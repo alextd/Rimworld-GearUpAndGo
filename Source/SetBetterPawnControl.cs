@@ -61,7 +61,7 @@ namespace GearUpAndGo
 				Log.Message($"using policy: {policy}");
 				//MainTabWindow_Assign_Policies
 				//private static void LoadState(List<AssignLink> links, List< Pawn > pawns, Policy policy)
-				MethodInfo LoadStateInfo = AccessTools.Method(AccessTools.TypeByName("MainTabWindow_Assign_Policies"), "LoadState");
+				MethodInfo LoadStateInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "LoadState");
 				LoadStateInfo.Invoke(default(object), new object[] {links, pawns, policy});
 			}
 		}
