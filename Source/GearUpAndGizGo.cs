@@ -63,8 +63,8 @@ namespace GearUpAndGo
 			if (lastPolicy == "")
 			{
 				lastPolicy = SetBetterPawnControl.CurrentPolicy();
-				SetBetterPawnControl.SetPawnControlPolicy(Settings.Get().betterPawnControlBattlePolicy);
 			}
+			SetBetterPawnControl.SetPawnControlPolicy(Settings.Get().betterPawnControlBattlePolicy);
 		}
 		public void Revert()
 		{
