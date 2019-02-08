@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using Harmony;
 
 namespace GearUpAndGo
 {
@@ -14,6 +16,10 @@ namespace GearUpAndGo
 		{
 			return true;
 		}
+
+		public static Type CEloadoutGiverType = AccessTools.TypeByName("JobGiver_UpdateLoadout");
+		public static MethodInfo CEloadoutGetter;
+		public static MethodInfo TryIssueJobPackageInfo = AccessTools.Method(typeof(ThinkNode), nameof(ThinkNode.TryIssueJobPackage));
 		protected override IEnumerable<Toil> MakeNewToils()
 		{
 			Toil toil = new Toil();
@@ -29,7 +35,20 @@ namespace GearUpAndGo
 				ThinkResult result = optimizer.TryIssueJobPackage(pawn, new JobIssueParams()); //TryGiveJob is protected :(
 				if (result == ThinkResult.NoJob)
 				{
-					Log.Message($"{pawn} JobDriver_GearUpAndGo result NoJob");
+					if (CEloadoutGiverType != null)
+					{
+						if (CEloadoutGetter == null)
+							CEloadoutGetter = AccessTools.Method(typeof(Pawn_Thinker), nameof(Pawn_Thinker.TryGetMainTreeThinkNode)).MakeGenericMethod(new Type[] { CEloadoutGiverType });
+						if (CEloadoutGetter != null)
+						{
+							object CELoadoutGiver = CEloadoutGetter.Invoke(pawn.thinker, new object[] { });
+							if (CELoadoutGiver != null) 
+								result = (ThinkResult)TryIssueJobPackageInfo.Invoke(CELoadoutGiver, new object[] { pawn, new JobIssueParams() });
+						}
+					}
+				}
+				if (result == ThinkResult.NoJob)
+				{
 					IntVec3 intVec = RCellFinder.BestOrderedGotoDestNear(TargetA.Cell, pawn);
 					Job job = new Job(JobDefOf.Goto, intVec);
 					if (pawn.Map.exitMapGrid.IsExitCell(UI.MouseCell()))
