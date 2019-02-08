@@ -36,8 +36,17 @@ namespace GearUpAndGo
 					{
 						job.exitMapOnArrival = true; // I guess
 					}
+
+					//preserve the queue
+					List<QueuedJob> queue = pawn.Drafted ? new List<QueuedJob>() : new List<QueuedJob>(pawn.jobs.jobQueue);
+
 					pawn.drafter.Drafted = true;
 					pawn.jobs.StartJob(job, JobCondition.Succeeded);
+					foreach (QueuedJob qj in queue)
+					{
+						pawn.jobs.jobQueue.EnqueueLast(qj.job, qj.tag);
+					}
+
 					MoteMaker.MakeStaticMote(intVec, pawn.Map, ThingDefOf.Mote_FeedbackGoto, 1f);
 				}
 				else
