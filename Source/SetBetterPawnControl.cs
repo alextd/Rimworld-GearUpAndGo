@@ -39,15 +39,15 @@ namespace GearUpAndGo
 			}
 		}
 
+		static Type assignManager = AccessTools.TypeByName("AssignManager");
+		static FieldInfo linksInfo = AccessTools.Field(assignManager, "links");
+		static FieldInfo policiesInfo = AccessTools.Field(assignManager, "policies");
+		static MethodInfo LoadStateInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "LoadState");
 		public static void SetPawnControlPolicyEx(string policyName)
 		{ 
-			Type assignManager = AccessTools.TypeByName("AssignManager");
-
-			FieldInfo linksInfo = AccessTools.Field(assignManager, "links");
 			List<AssignLink> links = (List<AssignLink>)linksInfo.GetValue(default(object));
 			Log.Message($"links are: {links.ToStringSafeEnumerable()}");
 
-			FieldInfo policiesInfo = AccessTools.Field(assignManager, "policies");
 			List<Policy> assignPolicies = (List<Policy>)policiesInfo.GetValue(default(object));
 			Log.Message($"assignPolicies are: {assignPolicies.ToStringSafeEnumerable()}");
 
@@ -61,7 +61,6 @@ namespace GearUpAndGo
 				Log.Message($"using policy: {policy}");
 				//MainTabWindow_Assign_Policies
 				//private static void LoadState(List<AssignLink> links, List< Pawn > pawns, Policy policy)
-				MethodInfo LoadStateInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "LoadState");
 				LoadStateInfo.Invoke(default(object), new object[] {links, pawns, policy});
 			}
 		}
@@ -80,12 +79,40 @@ namespace GearUpAndGo
 			}
 		}
 
+		static MethodInfo GetActivePolicyInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "GetActivePolicy", new Type[] { });
 		public static string CurrentPolicyEx()
 		{ 
-			Log.Message($"Resetting policyies");
+			Log.Message($"Resetting policies");
 
-			MethodInfo GetActivePolicyInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "GetActivePolicy", new Type[] { });
 			return (GetActivePolicyInfo.Invoke(null, new object[] { }) as Policy)?.label ?? "";
+		}
+
+		public static List<string> PolicyList()
+		{
+			if (!Active()) return null;
+
+			try
+			{
+				return PolicyListEx();
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+		
+		public static List<string> PolicyListEx()
+		{
+			//Hitting can't load type errors if I make this an easier yield return, so messy lists it is
+			List<string> policyNames = new List<string>();
+			List<Policy> assignPolicies = (List<Policy>)policiesInfo.GetValue(default(object));
+			Log.Message($"assignPolicies are: {assignPolicies.ToStringSafeEnumerable()}");
+			foreach (Policy p in assignPolicies)
+			{
+				policyNames.Add(p.label);
+			}
+
+			return policyNames;
 		}
 	}
 }

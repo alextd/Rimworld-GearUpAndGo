@@ -13,12 +13,36 @@ namespace GearUpAndGo
 {
 	public class Command_GearUpAndGo : Command
 	{
-		public Action<IntVec3, Event> action;
-		public Action actionEnd;
-		
 		public Command_GearUpAndGo() : base()
 		{
+			defaultLabel = "TD.GearAndGo".Translate();
+			defaultDesc = "TD.GearAndGoDesc".Translate();
 			alsoClickIfOtherInGroupClicked = false;
+		}
+
+		public static void Target(string policy = null)
+		{
+			Find.Targeter.BeginTargeting(new TargetingParameters() { canTargetLocations = true },
+				(LocalTargetInfo target) => Go(target, policy));
+		}
+
+		public static void Go(LocalTargetInfo target, string policy)
+		{
+			Log.Message($"GearUpAndGo to {target}, setting {policy}");
+
+			if (!Event.current.alt)
+				Current.Game.GetComponent<GearUpPolicyComp>().Set(policy);
+
+			foreach (Pawn p in Find.Selector.SelectedObjects
+				.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
+			{
+				p.jobs.TryTakeOrderedJob(new Job(GearUpAndGoJobDefOf.GearUpAndGo, target), JobTag.DraftedOrder);
+			}
+		}
+
+		public static void End()
+		{
+			Current.Game.GetComponent<GearUpPolicyComp>().Revert();
 		}
 
 		public override void ProcessInput(Event ev)
@@ -26,12 +50,20 @@ namespace GearUpAndGo
 			base.ProcessInput(ev);
 			SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
 			if (ev.shift && Current.Game.GetComponent<GearUpPolicyComp>().IsOn())
-				actionEnd();
+				End();
 			else
-				Find.Targeter.BeginTargeting(new TargetingParameters() { canTargetLocations = true }, delegate (LocalTargetInfo target)
-					{
-						this.action(target.Cell, ev);
-					});
+				Target();
+		}
+
+		public override IEnumerable<FloatMenuOption> RightClickFloatMenuOptions
+		{
+			get
+			{
+				var list = SetBetterPawnControl.PolicyList();
+				if (list == null) yield break;
+				foreach (string policy in list)
+					yield return new FloatMenuOption(policy, () => Target(policy));
+			}
 		}
 	}
 
@@ -58,13 +90,13 @@ namespace GearUpAndGo
 		{
 			Scribe_Values.Look(ref lastPolicy, "lastPolicy", "");
 		}
-		public void Set()
+		public void Set(string policy)
 		{
 			if (lastPolicy == "")
 			{
 				lastPolicy = SetBetterPawnControl.CurrentPolicy();
 			}
-			SetBetterPawnControl.SetPawnControlPolicy(Settings.Get().betterPawnControlBattlePolicy);
+			SetBetterPawnControl.SetPawnControlPolicy(policy ?? Settings.Get().betterPawnControlBattlePolicy);
 		}
 		public void Revert()
 		{
@@ -90,26 +122,7 @@ namespace GearUpAndGo
 				GearUpPolicyComp component = Current.Game.GetComponent<GearUpPolicyComp>();
 				yield return new Command_GearUpAndGo()
 				{
-					defaultLabel = "TD.GearAndGo".Translate(),
-					defaultDesc = "TD.GearAndGoDesc".Translate(),
-					icon = component.lastPolicy != "" ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon,
-					action = delegate (IntVec3 target, Event ev)
-					{
-						Log.Message($"GearUpAndGo to {target}");
-
-						if(!ev.alt)
-							Current.Game.GetComponent<GearUpPolicyComp>().Set();
-
-						foreach (Pawn p in Find.Selector.SelectedObjects
-							.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
-						{
-							p.jobs.TryTakeOrderedJob(new Job(GearUpAndGoJobDefOf.GearUpAndGo, target), JobTag.DraftedOrder);
-						}
-					},
-					actionEnd = delegate()
-					{
-						Current.Game.GetComponent<GearUpPolicyComp>().Revert();
-					}
+					icon = component.lastPolicy != "" ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon
 				};
 			}
 		}
