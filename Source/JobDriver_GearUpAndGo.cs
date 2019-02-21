@@ -17,9 +17,14 @@ namespace GearUpAndGo
 			return true;
 		}
 
+		//Combat Extended Support
 		public static Type CEloadoutGiverType = AccessTools.TypeByName("JobGiver_UpdateLoadout");
 		public static MethodInfo CEloadoutGetter;
 		public static MethodInfo TryIssueJobPackageInfo = AccessTools.Method(typeof(ThinkNode), nameof(ThinkNode.TryIssueJobPackage));
+
+		//Weapon of Choice support
+		public static Type WOCGiverType = AccessTools.TypeByName("JobGiver_OptimizeEquipment");
+		public static MethodInfo WOCGetter;
 		protected override IEnumerable<Toil> MakeNewToils()
 		{
 			Toil toil = new Toil();
@@ -28,11 +33,14 @@ namespace GearUpAndGo
 				Pawn pawn = toil.actor;
 				if (pawn.thinker == null) return;
 				
+				//Find apparel
 				JobGiver_OptimizeApparel optimizer = pawn.thinker.TryGetMainTreeThinkNode<JobGiver_OptimizeApparel>();
 				if (optimizer == null) return;
 
 				pawn.mindState?.Notify_OutfitChanged();// Lie so that it re-equips things
 				ThinkResult result = optimizer.TryIssueJobPackage(pawn, new JobIssueParams()); //TryGiveJob is protected :(
+
+				//Find loadout, Combat Extended
 				if (result == ThinkResult.NoJob)
 				{
 					if (CEloadoutGiverType != null)
@@ -47,6 +55,22 @@ namespace GearUpAndGo
 						}
 					}
 				}
+				//Find weapons, Weapons of Choice
+				if (result == ThinkResult.NoJob)
+				{
+					if (WOCGiverType != null)
+					{
+						if (WOCGetter == null)
+							WOCGetter = AccessTools.Method(typeof(Pawn_Thinker), nameof(Pawn_Thinker.TryGetMainTreeThinkNode)).MakeGenericMethod(new Type[] { WOCGiverType });
+						if (WOCGetter != null)
+						{
+							object WOCLoadoutGiver = WOCGetter.Invoke(pawn.thinker, new object[] { });
+							if (WOCLoadoutGiver != null)
+								result = (ThinkResult)TryIssueJobPackageInfo.Invoke(WOCLoadoutGiver, new object[] { pawn, new JobIssueParams() });
+						}
+					}
+				}
+				//Okay, nothing to do, go to target
 				if (result == ThinkResult.NoJob)
 				{
 					IntVec3 intVec = RCellFinder.BestOrderedGotoDestNear(TargetA.Cell, pawn);
@@ -68,6 +92,7 @@ namespace GearUpAndGo
 
 					MoteMaker.MakeStaticMote(intVec, pawn.Map, ThingDefOf.Mote_FeedbackGoto, 1f);
 				}
+				//Queue up the Gear job, then do another Gear+Go job
 				else
 				{
 					Job optJob = result.Job;
