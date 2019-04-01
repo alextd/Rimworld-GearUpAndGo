@@ -3,7 +3,6 @@ using System.Linq;
 using Verse;
 using Verse.AI;
 using RimWorld;
-using Harmony;
 using UnityEngine;
 
 namespace GearUpAndGo
@@ -14,23 +13,6 @@ namespace GearUpAndGo
 		{
 			// initialize settings
 			GetSettings<Settings>();
-#if DEBUG
-			HarmonyInstance.DEBUG = true;
-#endif
-			HarmonyInstance harmony = HarmonyInstance.Create("uuugggg.rimworld.GearUpAndGo.main");
-
-			//Turn off DefOf warning since harmony patches trigger it.
-			MethodInfo DefOfHelperInfo = AccessTools.Method(typeof(DefOfHelper), "EnsureInitializedInCtor");
-			if (!harmony.GetPatchedMethods().Contains(DefOfHelperInfo))
-				harmony.Patch(DefOfHelperInfo, new HarmonyMethod(typeof(Mod), "EnsureInitializedInCtorPrefix"), null);
-			
-			harmony.PatchAll();
-		}
-
-		public static bool EnsureInitializedInCtorPrefix()
-		{
-			//No need to display this warning.
-			return false;
 		}
 
 		public override void DoSettingsWindowContents(Rect inRect)
