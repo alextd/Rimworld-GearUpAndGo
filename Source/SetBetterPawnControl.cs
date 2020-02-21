@@ -6,7 +6,7 @@ using System.Reflection;
 using Verse;
 using RimWorld;
 using BetterPawnControl;
-using Harmony;
+using HarmonyLib;
 
 namespace GearUpAndGo
 {

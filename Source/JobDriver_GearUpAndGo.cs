@@ -6,7 +6,7 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 using Verse.AI;
-using Harmony;
+using HarmonyLib;
 
 namespace GearUpAndGo
 {
