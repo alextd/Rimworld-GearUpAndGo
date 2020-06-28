@@ -48,10 +48,6 @@
       <HintPath>..\..\..\..\..\workshop\content\294100\1541460369\Assemblies\BetterPawnControl.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PickUpAndHaul">
-      <HintPath>..\..\..\..\..\workshop\content\294100\1279012058\Assemblies\PickUpAndHaul.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
