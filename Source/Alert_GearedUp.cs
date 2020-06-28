@@ -24,7 +24,7 @@ namespace GearUpAndGo
 		public override Rect DrawAt(float topY, bool minimized)
 		{
 			//float height = TexGearUpAndGo.guagIconActive.height;	//The read out really doesn't handle custom heights :/
-			float height = Alert.Height;
+			float height = Height;
 			Rect rect = new Rect((float)UI.screenWidth - Padding - height, topY, height, height);
 			GUI.color = Color.white;
 			GUI.DrawTexture(rect, TexGearUpAndGo.guagIconActive);
