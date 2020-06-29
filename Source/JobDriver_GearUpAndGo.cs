@@ -80,15 +80,25 @@ namespace GearUpAndGo
 						job.exitMapOnArrival = true; // I guess
 					}
 
-					//preserve the queue
-					List<QueuedJob> queue = pawn.Drafted ? new List<QueuedJob>() : new List<QueuedJob>(pawn.jobs.jobQueue);
-
-					pawn.drafter.Drafted = true;
-					pawn.jobs.StartJob(job, JobCondition.Succeeded);
-					foreach (QueuedJob qj in queue)
+					if (!pawn.Drafted)
 					{
-						pawn.jobs.jobQueue.EnqueueLast(qj.job, qj.tag);
+						//Drafting clears the job queue. We want to keep the queue.
+						//It'll also return jobs to the pool, and clear each job too.
+						//So extract each job and clear the queue manually, then re-queue them all.
+
+						List<QueuedJob> queue = new List<QueuedJob>();
+						while (pawn.jobs.jobQueue.Count > 0)
+							queue.Add(pawn.jobs.jobQueue.Dequeue());
+
+						pawn.drafter.Drafted = true;
+
+						pawn.jobs.StartJob(job, JobCondition.Succeeded);
+
+						foreach (QueuedJob qj in queue)
+							pawn.jobs.jobQueue.EnqueueLast(qj.job, qj.tag);
 					}
+					else
+						pawn.jobs.StartJob(job, JobCondition.Succeeded);
 
 					MoteMaker.MakeStaticMote(intVec, pawn.Map, ThingDefOf.Mote_FeedbackGoto, 1f);
 				}
