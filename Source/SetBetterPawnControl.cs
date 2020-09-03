@@ -10,6 +10,7 @@ using HarmonyLib;
 
 namespace GearUpAndGo
 {
+	[StaticConstructorOnStartup]
 	static class SetBetterPawnControl
 	{
 		public static bool Active()
@@ -39,29 +40,34 @@ namespace GearUpAndGo
 			}
 		}
 
-		static Type assignManager = AccessTools.TypeByName("AssignManager");
-		static FieldInfo linksInfo = AccessTools.Field(assignManager, "links");
-		static FieldInfo policiesInfo = AccessTools.Field(assignManager, "policies");
-		static MethodInfo LoadStateInfo = AccessTools.Method(AccessTools.TypeByName("AssignManager"), "LoadState");
+
+		static Type assignManager;
+		static Type policyType;
+		static FieldInfo policiesInfo;
+		static MethodInfo LoadStateInfo;
+		static SetBetterPawnControl()
+		{
+			assignManager = AccessTools.TypeByName("BetterPawnControl.AssignManager");
+			Log.Message($"BCP assignManager: {assignManager}");
+			policyType = AccessTools.TypeByName("BetterPawnControl.Policy");
+			Log.Message($"BCP policyType: {policyType}");
+			policiesInfo = AccessTools.Field(assignManager, "policies");
+			Log.Message($"BCP policiesInfo: {policiesInfo}");
+			LoadStateInfo = AccessTools.Method(assignManager, "LoadState", new Type[] { policyType });
+			Log.Message($"BCP LoadStateInfo: {LoadStateInfo}");
+		}
 		public static void SetPawnControlPolicyEx(string policyName)
 		{ 
-			List<AssignLink> links = (List<AssignLink>)linksInfo.GetValue(default(object));
-			Log.Message($"links are: {links.ToStringSafeEnumerable()}");
-
 			List<Policy> assignPolicies = (List<Policy>)policiesInfo.GetValue(default(object));
 			Log.Message($"assignPolicies are: {assignPolicies.ToStringSafeEnumerable()}");
-
-			List<Pawn> pawns = Find.CurrentMap.mapPawns.FreeColonists.ToList();
-			Log.Message($"pawns are: {pawns.ToStringSafeEnumerable()}");
-
 			Policy policy = assignPolicies.FirstOrDefault(p => p.label == policyName);
 			
 			if (policy != null)
 			{
 				Log.Message($"using policy: {policy}");
 				//MainTabWindow_Assign_Policies
-				//private static void LoadState(List<AssignLink> links, List< Pawn > pawns, Policy policy)
-				LoadStateInfo.Invoke(default(object), new object[] {links, pawns, policy});
+				//private static void LoadState(Policy policy)
+				LoadStateInfo.Invoke(default(object), new object[] {policy});
 			}
 		}
 
