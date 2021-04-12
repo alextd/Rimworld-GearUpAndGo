@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	
+	<TD.GearAndGo>S'équiper et partir</TD.GearAndGo>
+	<TD.GearAndGoDesc>Obtenez l'équipement, mobilisez, puis accédez à l'emplacement ciblé. \n \n Si vous utilisez un meilleur contrôle des personages, cela définira également la politique (nommée dans les paramètres). \n Cliquez en maintenant la touche Maj enfoncée pour réinitialiser la stratégie Meilleur contrôle des personnages. \n \n Laissez-cliquer lorsque vous le ciblez, cela ne définira pas une meilleure stratégie de contrôle des personnages. Shift-clic lors du ciblage et il met la commande en file d'attente.</TD.GearAndGoDesc>
+	<TD.GearUpAndGoSettingsName>S'équiper er partir</TD.GearUpAndGoSettingsName>
+	<TD.SettingBetterPawnControlPolicy>Si vous utilisez un meilleur contrôle des personnages, définissez cette stratégie lorsque vous cliquez sur le bouton:</TD.SettingBetterPawnControlPolicy>
+	<TD.SettingBetterPawnControlRemembered>La dernière politique est mémorisée, donc un clic sur le bouton la réinitialisera</TD.SettingBetterPawnControlRemembered>
+	<TD.GearUpPolicySetAlert>S'équiper et partir a mis en place une meilleure politique de contrôle des personnages pour une bataille.\n\nCliquez pour revenir à la politique précédente</TD.GearUpPolicySetAlert>
+	
+</LanguageData>
