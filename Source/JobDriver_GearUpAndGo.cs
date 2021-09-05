@@ -100,7 +100,7 @@ namespace GearUpAndGo
 					else
 						pawn.jobs.StartJob(job, JobCondition.Succeeded);
 
-					MoteMaker.MakeStaticMote(intVec, pawn.Map, ThingDefOf.Mote_FeedbackGoto, 1f);
+					FleckMaker.Static(intVec, pawn.Map, FleckDefOf.FeedbackGoto);
 				}
 				//Queue up the Gear job, then do another Gear+Go job
 				else
