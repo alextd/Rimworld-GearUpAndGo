@@ -95,7 +95,7 @@ namespace GearUpAndGo
 			{
 				lastPolicy = SetBetterPawnControl.CurrentPolicy();
 			}
-			SetBetterPawnControl.SetPawnControlPolicy(policy ?? Settings.Get().betterPawnControlBattlePolicy);
+			SetBetterPawnControl.SetPawnControlPolicy(policy ?? Mod.settings.betterPawnControlBattlePolicy);
 		}
 		public void Revert()
 		{

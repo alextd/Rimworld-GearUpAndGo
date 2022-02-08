@@ -6,14 +6,9 @@ using RimWorld;
 
 namespace GearUpAndGo
 {
-	class Settings : ModSettings
+	public class Settings : ModSettings
 	{
 		public string betterPawnControlBattlePolicy = "";
-
-		public static Settings Get()
-		{
-			return LoadedModManager.GetMod<GearUpAndGo.Mod>().GetSettings<Settings>();
-		}
 
 		public void DoWindowContents(Rect wrect)
 		{
