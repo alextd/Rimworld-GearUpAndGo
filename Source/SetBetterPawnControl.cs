@@ -44,7 +44,9 @@ namespace GearUpAndGo
 		static Type assignManager;
 		static Type policyType;
 		static FieldInfo policiesInfo;
+
 		static MethodInfo LoadStateInfo;
+		public static Delegate LoadStateDelegate;
 		static SetBetterPawnControl()
 		{
 			assignManager = AccessTools.TypeByName("BetterPawnControl.AssignManager");
@@ -53,8 +55,11 @@ namespace GearUpAndGo
 			Log.Message($"BCP policyType: {policyType}");
 			policiesInfo = AccessTools.Field(assignManager, "policies");
 			Log.Message($"BCP policiesInfo: {policiesInfo}");
+
 			LoadStateInfo = AccessTools.Method(assignManager, "LoadState", new Type[] { policyType });
 			Log.Message($"BCP LoadStateInfo: {LoadStateInfo}");
+			LoadStateDelegate = LoadStateInfo.CreateDelegate(typeof(Action<>).MakeGenericType(policyType));
+			Log.Message($"BCP LoadStateDelegate: {LoadStateDelegate}");
 		}
 		public static void SetPawnControlPolicyEx(string policyName)
 		{ 
@@ -67,7 +72,7 @@ namespace GearUpAndGo
 				Log.Message($"using policy: {policy}");
 				//MainTabWindow_Assign_Policies
 				//private static void LoadState(Policy policy)
-				LoadStateInfo.Invoke(default(object), new object[] {policy});
+				LoadStateDelegate.DynamicInvoke(policy);
 			}
 		}
 
