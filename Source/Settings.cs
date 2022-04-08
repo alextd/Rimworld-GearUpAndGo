@@ -17,6 +17,7 @@ namespace GearUpAndGo
 
 			options.Label("TD.SettingBetterPawnControlPolicy".Translate());
 			betterPawnControlBattlePolicy = options.TextEntry(betterPawnControlBattlePolicy, 1);
+			options.Label("TD.SettingBetterPawnControlCustom".Translate());
 			options.Label("TD.SettingBetterPawnControlRemembered".Translate());
 			options.Gap();
 

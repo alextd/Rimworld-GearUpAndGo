@@ -2,9 +2,10 @@
 <LanguageData>
 	
 	<TD.GearAndGo>Gear &amp; Go</TD.GearAndGo>
-	<TD.GearAndGoDesc>Get gear, draft, then go to the targeted location.\n\nIf you are using Better Pawn Control, this will also set the policy (named in settings). \nShift-click to reset Better Pawn Control policy.\n\nAlt-click when targeting it won't set Better Pawn Control Policy. Shift-click when targeting and it queues up the command.</TD.GearAndGoDesc>
+	<TD.GearAndGoDesc>Get gear, draft, then go to the targeted location.\n\nIf you are using Better Pawn Control, this will also set the policy (named in settings).\nRight-click to set policy from a dropdown menu instead\n\nShift-click to reset Better Pawn Control policy.\n\nAlt-click when targeting it won't set Better Pawn Control Policy.\nShift-click when targeting and it queues up the command.</TD.GearAndGoDesc>
 	<TD.GearUpAndGoSettingsName>Gear Up And Go</TD.GearUpAndGoSettingsName>
 	<TD.SettingBetterPawnControlPolicy>If you're using Better Pawn Control, set this policy when you click the button:</TD.SettingBetterPawnControlPolicy>
+	<TD.SettingBetterPawnControlCustom>(Right-click the button to select a policy from a dropdown menu instead)</TD.SettingBetterPawnControlCustom>
 	<TD.SettingBetterPawnControlRemembered>The last policy is remembered, so shift-clicking the button will reset it</TD.SettingBetterPawnControlRemembered>
 	<TD.GearUpPolicySetAlert>Gear Up And Go has set Better Pawn Control Policy for a battle.\n\nClick to reset to previous policy</TD.GearUpPolicySetAlert>
 	
