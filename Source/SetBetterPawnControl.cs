@@ -93,13 +93,16 @@ namespace GearUpAndGo
 			}
 		}
 
-		private static IEnumerable<string> PolicyListEx()
+		private static List<string> PolicyListEx()
 		{
 			//This oneliner apparently causes problems on load when BCP not active.?
 			//BetterPawnControl.AssignManager.policies.Select(p => p.label);
 
+			List<string> result = new();
 			foreach (BetterPawnControl.Policy p in BetterPawnControl.AssignManager.policies)
-				yield return p.label;
+				result.Add(p.label);
+
+			return result;
 		}
 	}
 }
