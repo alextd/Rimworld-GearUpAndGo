@@ -17,7 +17,7 @@ namespace GearUpAndGo
 
 		public override AlertReport GetReport()
 		{
-			return Current.Game.GetComponent<GearUpPolicyComp>().IsOn();
+			return GearUpPolicyComp.comp.IsOn();
 		}
 
 		private const float Padding = 6f;
@@ -34,7 +34,7 @@ namespace GearUpAndGo
 			}
 			if (Widgets.ButtonInvisible(rect, false))
 			{
-				Current.Game.GetComponent<GearUpPolicyComp>().Revert();
+				GearUpPolicyComp.comp.Revert();
 			}
 			return rect;
 		}

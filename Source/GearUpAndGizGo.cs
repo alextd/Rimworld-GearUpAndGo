@@ -7,6 +7,7 @@ using UnityEngine;
 using RimWorld;
 using Verse.Sound;
 using Verse.AI;
+using HarmonyLib;
 
 namespace GearUpAndGo
 {
@@ -30,7 +31,7 @@ namespace GearUpAndGo
 			Log.Message($"GearUpAndGo to {target}, setting {policy}");
 
 			if (!Event.current.alt)
-				Current.Game.GetComponent<GearUpPolicyComp>().Set(policy);
+				GearUpPolicyComp.comp.Set(policy);
 
 			foreach (Pawn p in Find.Selector.SelectedObjects
 				.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
@@ -41,14 +42,14 @@ namespace GearUpAndGo
 
 		public static void End()
 		{
-			Current.Game.GetComponent<GearUpPolicyComp>().Revert();
+			GearUpPolicyComp.comp.Revert();
 		}
 
 		public override void ProcessInput(Event ev)
 		{
 			base.ProcessInput(ev);
 			SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
-			if (ev.shift && Current.Game.GetComponent<GearUpPolicyComp>().IsOn())
+			if (ev.shift && GearUpPolicyComp.comp.IsOn())
 				End();
 			else
 				Target();
@@ -75,9 +76,13 @@ namespace GearUpAndGo
 
 	public class GearUpPolicyComp : GameComponent
 	{
+		public static GearUpPolicyComp comp;
+
 		public string lastPolicy = "";
 
-		public GearUpPolicyComp(Game game) { }
+		public GearUpPolicyComp(Game game) {
+			comp = this;
+		}
 
 		public override void ExposeData()
 		{
@@ -106,18 +111,26 @@ namespace GearUpAndGo
 		}
 	}
 
-	public class CompGearUpAndGizGo : ThingComp
+
+	[HarmonyPatch(typeof(Pawn), nameof(Pawn.GetGizmos))]
+	public static class GearUpAndGizGo
 	{
-		public override IEnumerable<Gizmo> CompGetGizmosExtra()
+		//	public override IEnumerable<Gizmo> GetGizmos()
+		public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> __result, Pawn __instance)
 		{
-			if (this.parent is Pawn gizmoPawn)
+			if (__instance.IsColonistPlayerControlled)
 			{
-				GearUpPolicyComp component = Current.Game.GetComponent<GearUpPolicyComp>();
 				yield return new Command_GearUpAndGo()
 				{
-					icon = component.lastPolicy != "" ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon
+					icon = GearUpPolicyComp.comp.lastPolicy != "" ? TexGearUpAndGo.guagIconActive : TexGearUpAndGo.guagIcon
 				};
 			}
+
+			foreach (var r in __result)
+				yield return r;
 		}
 	}
+
+	// backcompat dummy so it doesn't log error loading old saves
+	public class CompGearUpAndGizGo : ThingComp { }
 }

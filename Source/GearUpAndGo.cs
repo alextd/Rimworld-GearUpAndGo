@@ -4,6 +4,7 @@ using Verse;
 using Verse.AI;
 using RimWorld;
 using UnityEngine;
+using HarmonyLib;
 
 namespace GearUpAndGo
 {
@@ -14,6 +15,13 @@ namespace GearUpAndGo
 		{
 			// initialize settings
 			settings = GetSettings<Settings>();
+
+#if DEBUG
+			Harmony.DEBUG = true;
+#endif
+			Harmony harmony = new Harmony("uuugggg.rimworld.GearUpAndGo.main");
+
+			harmony.PatchAll();
 		}
 
 		public override void DoSettingsWindowContents(Rect inRect)
