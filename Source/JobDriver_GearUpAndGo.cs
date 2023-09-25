@@ -10,6 +10,7 @@ using HarmonyLib;
 
 namespace GearUpAndGo
 {
+	[StaticConstructorOnStartup]
 	public class JobDriver_GearUpAndGo : JobDriver
 	{
 		public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -18,13 +19,21 @@ namespace GearUpAndGo
 		}
 
 		//Combat Extended Support
-		public static Type CEloadoutGiverType = AccessTools.TypeByName("JobGiver_UpdateLoadout");
+		public static Type CEloadoutGiverType;
 		public static MethodInfo CEloadoutGetter;
-		public static MethodInfo TryIssueJobPackageInfo = AccessTools.Method(typeof(ThinkNode), nameof(ThinkNode.TryIssueJobPackage));
+		public static MethodInfo TryIssueJobPackageInfo;
 
-		//Weapon of Choice support
-		public static Type WOCGiverType = AccessTools.TypeByName("JobGiver_OptimizeEquipment");
-		public static MethodInfo WOCGetter;
+		static JobDriver_GearUpAndGo()
+		{
+			CEloadoutGiverType = AccessTools.TypeByName("JobGiver_UpdateLoadout");
+
+			if (CEloadoutGiverType != null)
+			{
+				TryIssueJobPackageInfo = AccessTools.Method(typeof(ThinkNode), nameof(ThinkNode.TryIssueJobPackage));
+				CEloadoutGetter = AccessTools.Method(typeof(Pawn_Thinker), nameof(Pawn_Thinker.TryGetMainTreeThinkNode)).MakeGenericMethod(new Type[] { CEloadoutGiverType });
+			}
+		}
+
 		protected override IEnumerable<Toil> MakeNewToils()
 		{
 			Toil toil = new Toil();
@@ -43,31 +52,11 @@ namespace GearUpAndGo
 				//Find loadout, Combat Extended
 				if (result == ThinkResult.NoJob)
 				{
-					if (CEloadoutGiverType != null)
+					if (CEloadoutGiverType != null && CEloadoutGetter != null)
 					{
-						if (CEloadoutGetter == null)
-							CEloadoutGetter = AccessTools.Method(typeof(Pawn_Thinker), nameof(Pawn_Thinker.TryGetMainTreeThinkNode)).MakeGenericMethod(new Type[] { CEloadoutGiverType });
-						if (CEloadoutGetter != null)
-						{
-							object CELoadoutGiver = CEloadoutGetter.Invoke(pawn.thinker, new object[] { });
-							if (CELoadoutGiver != null) 
-								result = (ThinkResult)TryIssueJobPackageInfo.Invoke(CELoadoutGiver, new object[] { pawn, new JobIssueParams() });
-						}
-					}
-				}
-				//Find weapons, Weapons of Choice
-				if (result == ThinkResult.NoJob)
-				{
-					if (WOCGiverType != null)
-					{
-						if (WOCGetter == null)
-							WOCGetter = AccessTools.Method(typeof(Pawn_Thinker), nameof(Pawn_Thinker.TryGetMainTreeThinkNode)).MakeGenericMethod(new Type[] { WOCGiverType });
-						if (WOCGetter != null)
-						{
-							object WOCLoadoutGiver = WOCGetter.Invoke(pawn.thinker, new object[] { });
-							if (WOCLoadoutGiver != null)
-								result = (ThinkResult)TryIssueJobPackageInfo.Invoke(WOCLoadoutGiver, new object[] { pawn, new JobIssueParams() });
-						}
+						object CELoadoutGiver = CEloadoutGetter.Invoke(pawn.thinker, new object[] { });
+						if (CELoadoutGiver != null)
+							result = (ThinkResult)TryIssueJobPackageInfo.Invoke(CELoadoutGiver, new object[] { pawn, new JobIssueParams() });
 					}
 				}
 				//Okay, nothing to do, go to target
