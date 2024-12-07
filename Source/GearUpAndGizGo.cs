@@ -31,7 +31,7 @@ namespace GearUpAndGo
 			Log.Message($"GearUpAndGo to {target}, setting {policy}");
 
 			if (!Event.current.alt)
-				GearUpPolicyComp.comp.Set(policy);
+				GearUpPolicyComp.comp.Set(policy ?? Mod.settings.betterPawnControlBattlePolicy);
 
 			foreach (Pawn p in Find.Selector.SelectedObjects
 				.Where(o => o is Pawn p && p.IsColonistPlayerControlled).Cast<Pawn>())
@@ -90,11 +90,12 @@ namespace GearUpAndGo
 		}
 		public void Set(string policy)
 		{
+			if (policy == "") return;
 			if (lastPolicy == "")
 			{
 				lastPolicy = SetBetterPawnControl.CurrentPolicy();
 			}
-			SetBetterPawnControl.SetPawnControlPolicy(policy ?? Mod.settings.betterPawnControlBattlePolicy);
+			SetBetterPawnControl.SetPawnControlPolicy(policy);
 		}
 		public void Revert()
 		{
